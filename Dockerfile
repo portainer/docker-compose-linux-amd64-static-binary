@@ -6,11 +6,11 @@ ENV LANG C.UTF-8
 RUN apt-get update && apt-get install -qq --no-install-recommends unzip patchelf
 
 # Set the versions
-ARG DOCKER_COMPOSE_VER=1.28.2
-# docker-compose requires pyinstaller 3.5 (check github.com/docker/compose/requirements-build.txt)
+ARG DOCKER_COMPOSE_VER=1.29.2
+# docker-compose requires pyinstaller 4.1 (check https://raw.githubusercontent.com/docker/compose/master/requirements-build.txt)
 # If this changes, you may need to modify the version of "six" below
-ENV PYINSTALLER_VER 3.5
-# "six" is needed for PyInstaller. v1.11.0 is the latest as of PyInstaller 3.5
+ENV PYINSTALLER_VER 4.1
+# "six" is needed for PyInstaller. v1.11.0 is the latest as of PyInstaller 4.1
 ENV SIX_VER 1.11.0
 
 # Install dependencies
@@ -22,7 +22,7 @@ RUN pip install staticx
 # https://pyinstaller.readthedocs.io/en/stable/bootloader-building.html
 WORKDIR /build/pyinstallerbootloader
 RUN curl -fsSL https://github.com/pyinstaller/pyinstaller/releases/download/v$PYINSTALLER_VER/PyInstaller-$PYINSTALLER_VER.tar.gz | tar xvz >/dev/null \
-    && cd PyInstaller*/bootloader \
+    && cd pyinstaller*/bootloader \
     && python3 ./waf all
 
 # Clone docker-compose
